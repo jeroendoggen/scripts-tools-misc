@@ -33,10 +33,12 @@ else
     bcpp -fi "$1" -fnc "bcpp_indenter.cfg" -fo indentoutput.tmp
     mv indentoutput.tmp "$1"
   else
-    echo "ERROR: As parameter given directory or file does not exist!"
-    echo "Syntax is: call_BCPP.sh dirname filesuffix"
-    echo "Syntax is: call_BCPP.sh filename"
-    echo "Example: call_BCPP.sh temp cpp"
+    echo "ERROR: Requested directory or file does not exist!"
+    echo "Syntax is: indenter.sh dirname"    
+    echo "Syntax is: indenter.sh dirname filesuffix"
+    echo "Syntax is: indenter.sh filename"
+    echo "Example: indenter.sh toindent"
+    echo "Example: indenter.sh toindent cpp"
     exit 1
   fi
 fi
