@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Copyright (c) 2012, Leonid Evdokimov <leon@darkk.net.ru>
+#
+# This trivial piece of code is in public domain.
+#
+
+set -e
+
+run_test() {
+    # That's quick-n-dirty way to check syntax as soon as partial commits exist
+    # in git world, but it's good enough. Partial commit support is complext:
+    # http://newartisans.com/2009/02/building-a-better-pre-commit-hook-for-git
+    # http://stackoverflow.com/questions/2412450/git-pre-commit-hook-changed-added-files
+
+    # `|| true` to avoid failures as soon as pylint has some false positives: http://www.logilab.org/blogentry/78354
+    # check only for errors
+    # git diff --cached --name-only --diff-filter=ACM | grep '\.py$' | xargs --no-run-if-empty pylint -E
+    # check for everything
+    git diff --cached --name-only --diff-filter=ACM | grep '\.py$' | xargs --no-run-if-empty pylint --include-ids=y --reports=n
+    if [ $? -ne 0 ]
+      then
+        echo "$* failed with exit code $?"
+        echo "blah"
+        exit $?
+      else
+        echo "$* failed with exit code $?"
+        exit $?
+    fi
+
+}
+
+case "${1}" in
+    --about )
+        echo "Check for python syntax errors using pylint."
+        ;;
+    * )
+        run_test
+        ;;
+esac
