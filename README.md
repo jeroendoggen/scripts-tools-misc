@@ -1,5 +1,5 @@
-scripts-tools-misc
-==================
+My shell tools & scripts
+========================
 
  * Fastcopy: A shell script to copy files over a local network using tar, netcat and pipes
  * Indenter: A shell script for automated (c/c++) source code indentation
