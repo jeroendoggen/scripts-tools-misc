@@ -18,13 +18,18 @@ Based on:
 Usage:
 ------
 
- # place 'receiver.sh' in the destination folder
- # place 'sender.sh' in the source folder
- # start receiver: './receiver.sh -p port'
- # start sender: './sender.sh -s folder/ -d target_ip -p port'
- # wait....
+ 1. place 'receiver.sh' in the destination folder
+ 2. place 'sender.sh' in the source folder
+ 3. start receiver: './receiver.sh -p port'
+ 4. start sender: './sender.sh -s folder/ -d target_ip -p port'
+ 5. wait....
  
 Screenshot:
 -----------
- 
+Speed test between an old AMD64 and an Intel i3 pc over gigabit Ethernet using a 1GB ramdisk for the source and the destination.
+
+ * rsync speed: ~24M bytes/sec
+ * fastcopy speed: ~87M bytes/sec
+
+![Screenshot](screenshot/fastCopyScreenshot.png?raw=true)
 
