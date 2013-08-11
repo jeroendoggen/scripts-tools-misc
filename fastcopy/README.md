@@ -21,7 +21,7 @@ Usage:
  1. place 'receiver.sh' in the destination folder
  2. place 'sender.sh' in the source folder
  3. start receiver: './receiver.sh -p port'
- 4. start sender: './sender.sh -s folder/ -d target_ip -p port'
+ 4. start sender: './sender.sh -s source_folder/ -d destination_ip -p port'
  5. wait....
  
 Screenshot:
