@@ -1,0 +1,5 @@
+show log on terminal using "git graph"
+ * git config --global alias.graph "log --graph --all --pretty=format:'%Cred%h%Creset - %Cgreen(%cr)%Creset %s%C(yellow)%d%Creset' --abbrev-commit --date=relative"
+
+show shorter git status message using "git st"
+ * git config --global alias.st "status --short"
