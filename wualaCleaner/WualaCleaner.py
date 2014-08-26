@@ -1,4 +1,4 @@
-""" 
+"""
     WualaCleaner: tool to clean up "fotos-familie" archive
     WualaCleaner.py is copyright 2013 Jeroen Doggen.
 """
@@ -7,22 +7,35 @@ import os
 import sys
 import shutil
 
+
 SCRIPTPATH = os.getcwd()
 INPUTFOLDER = SCRIPTPATH + "/input"
 OUTPUTFOLDER = SCRIPTPATH + "/output"
 
+
 def run():
     """Run the main program"""
+    print("Moving files to output folder & creating lowres versions...")
     for directory, subdirectories, files in os.walk(INPUTFOLDER):
-        for subdir in subdirectories:
-            sourcedir = os.path.join(INPUTFOLDER, subdir)
-            print(sourcedir)
-            size = "%.1f" % float(get_size(sourcedir) / 1024 / 1024)
-            shutil.move(sourcedir, OUTPUTFOLDER)
-            if not os.path.exists(sourcedir):
-                os.makedirs(sourcedir + "_backup_" + str(size) + "MB")
+        print(directory)
+        for thefile in files:
+            os.chdir(directory)
+            if not "_lowres" in thefile:
+                outputfile = thefile + "_lowres"
+                os.system("convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -resize 1280"
+                            + " " + thefile
+                            + " " + outputfile)
+                dirs = os.path.split(directory)
+                dirs = dirs[1]
+                target = os.path.join(OUTPUTFOLDER, dirs)
+                print("Creating: " + dirs + "/" + outputfile)
+                if not os.path.exists(target):
+                    os.mkdir(target)
+                shutil.move(thefile, target + "/" + thefile)
+            os.chdir(INPUTFOLDER)
 
-def get_size(start_path = '.'):
+
+def get_size(start_path='.'):
     """ Calculate folder size """
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(start_path):
