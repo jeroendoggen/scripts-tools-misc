@@ -9,7 +9,7 @@ import shutil
 
 
 SCRIPTPATH = os.getcwd()
-INPUTFOLDER = SCRIPTPATH + "/input"
+INPUTFOLDER = SCRIPTPATH + "/in"
 OUTPUTFOLDER = SCRIPTPATH + "/output"
 
 
@@ -21,8 +21,8 @@ def run():
         for thefile in files:
             os.chdir(directory)
             if not "_lowres" in thefile:
-                outputfile = thefile + "_lowres"
-                os.system("convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -resize 1280"
+                outputfile = thefile + "_lowres.jpg"
+                os.system("convert -gaussian-blur 0.03 -quality 75% -resize 1280"
                             + " " + thefile
                             + " " + outputfile)
                 dirs = os.path.split(directory)
