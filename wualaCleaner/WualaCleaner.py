@@ -1,6 +1,6 @@
 """
     WualaCleaner: tool to clean up "fotos-familie" archive
-    WualaCleaner.py is copyright 2013 Jeroen Doggen.
+    WualaCleaner.py is copyright 2013,2014 Jeroen Doggen.
 """
 
 import os
@@ -22,7 +22,7 @@ def run():
             os.chdir(directory)
             if not "_lowres" in thefile:
                 outputfile = thefile + "_lowres.jpg"
-                os.system("convert -gaussian-blur 0.03 -quality 75% -resize 1280 -define jpeg:extent=200kb"
+                os.system("convert -gaussian-blur 0.03 -quality 75% -resize 1280"
                             + " " + thefile
                             + " " + outputfile)
                 dirs = os.path.split(directory)
@@ -31,7 +31,8 @@ def run():
                 print("Creating: " + dirs + "/" + outputfile)
                 if not os.path.exists(target):
                     os.mkdir(target)
-                shutil.move(thefile, target + "/" + thefile)
+                if os.path.exists(outputfile):
+                    shutil.move(outputfile, target + "/" + outputfile)
             os.chdir(INPUTFOLDER)
 
 
