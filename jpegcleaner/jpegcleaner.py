@@ -15,7 +15,7 @@ parser.add_argument("folder", help="the folder to clean")
 args = parser.parse_args()
 
 print("\nStorage space for the folder '" + args.folder + "' before cleanup:")
-retVal = os.system('du -sh ' + args.folder) 
+retVal = os.system('du -sh ' + args.folder + " 2>&1 | tee ./jpegcleaner.log")  
 
 print("\nRemoving duplicate files with fdupes")
 retVal = os.system('fdupes -rdN ' + args.folder) 
@@ -37,5 +37,10 @@ for subdir, dirs, files in os.walk(args.folder):
 print("\nRemoving duplicate files with jpegdupes")
 retVal = os.system('jpegdupes -d -a ' + args.folder)             
 
-print("\nStorage space for this folder after cleanup:")
-retVal = os.system('du -sh ' + args.folder) 
+print("\nStorage space for this folder:")
+print("\nBefore cleanup:")
+retVal = os.system('cat ./jpegcleaner.log')
+print("\nAfter cleanup:")
+retVal = os.system('du -sh ' + args.folder + " 2>&1 | tee -a ./jpegcleaner.log")
+
+
