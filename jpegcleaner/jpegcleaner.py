@@ -17,6 +17,9 @@ args = parser.parse_args()
 print("\nStorage space for the folder '" + args.folder + "' before cleanup:")
 retVal = os.system('du -sh ' + args.folder + " 2>&1 | tee ./jpegcleaner.log")  
 
+print("\nNumber of files in the folder '" + args.folder + "' before cleanup:")
+retVal = os.system('ls -1R ' + args.folder + " | wc -l 2>&1 | tee -a ./jpegcleaner.log")  
+
 print("\nRemoving duplicate files with fdupes")
 retVal = os.system('fdupes -rdN ' + args.folder) 
 
@@ -29,18 +32,22 @@ for subdir, dirs, files in os.walk(args.folder):
             #print("JPEG file: " + filename)
             retVal = os.system('jpeginfo -c ' + "\""+ filepath + "\"") # returns the exit status
         
-            if(0 != retVal):
-                #os.remove(filepath)
-                shutil.move(filepath, './temp/')
-                print("Removed invalid JPEG file: " + filepath)
+            if(0 != retVal):              
+                try:
+                    shutil.move(filepath + fileCount, './temp/')
+                    print("Moved invalid JPEG file: " + filepath)
+                except:
+                    print("File exists, deleting file: " + filepath)
+                    os.remove(filepath)                                            
 
 print("\nRemoving duplicate files with jpegdupes")
 retVal = os.system('jpegdupes -d -a ' + args.folder)             
 
-print("\nStorage space for this folder:")
-print("\nBefore cleanup:")
+print("\nBefore cleanup: storage space & file count: " + args.folder)
 retVal = os.system('cat ./jpegcleaner.log')
-print("\nAfter cleanup:")
-retVal = os.system('du -sh ' + args.folder + " 2>&1 | tee -a ./jpegcleaner.log")
 
+print("\nAfter cleanup: storage space")
+retVal = os.system('du -sh ' + args.folder + " 2>&1 | tee -a ./jpegcleaner.log")  
 
+print("\nAfter cleanup: file count")
+retVal = os.system('ls -1R ' + args.folder + " | wc -l 2>&1 | tee -a ./jpegcleaner.log")  
